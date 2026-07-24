@@ -1,0 +1,602 @@
+/* =========================================================
+   grillzNV — style.css
+   Loja de Grillz — tema dark, hip hop/luxuoso
+   ========================================================= */
+
+/* -----------------------------------------------------------
+   1. VARIÁVEIS CSS (:root)
+   Centralizamos a paleta e outros valores repetidos aqui.
+   Se quiser trocar o "tom" da loja inteira, basta mexer aqui.
+----------------------------------------------------------- */
+:root {
+  /* Fundo — preto quente (não é #000 puro, fica mais "veludo") */
+  --bg-base: #0c0a08;
+  --bg-elevado: #17130d;
+  --bg-card: #1e1811;
+
+  /* Dourado — cor de assinatura da marca */
+  --gold: #e3b23c;
+  --gold-claro: #f6dfa0;
+  --gold-escuro: #9c7a24;
+
+  /* Acentos secundários */
+  --prata: #cfd2d8;
+  --gelo: #bfe8ff; /* usado só em detalhes de "diamante/VVS" */
+
+  /* Texto */
+  --texto: #f5efe4;
+  --texto-suave: #a89c88;
+
+  /* Utilidade */
+  --linha: rgba(227, 178, 60, 0.18);
+  --sombra-ouro: 0 0 28px rgba(227, 178, 60, 0.28);
+  --raio: 14px;
+  --raio-pequeno: 8px;
+
+  /* Tipografia */
+  --fonte-display: "Bebas Neue", sans-serif;
+  --fonte-corpo: "Space Grotesk", sans-serif;
+  --fonte-mono: "Space Mono", monospace;
+
+  /* Transição padrão usada em vários hovers */
+  --transicao: 0.25s ease;
+}
+
+/* -----------------------------------------------------------
+   2. RESET BÁSICO
+----------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--texto);
+  font-family: var(--fonte-corpo);
+  line-height: 1.5;
+  /* leve textura de "grão" no fundo para não ficar um preto chapado */
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(227, 178, 60, 0.06), transparent 40%),
+    radial-gradient(circle at 85% 0%, rgba(191, 232, 255, 0.04), transparent 35%);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* -----------------------------------------------------------
+   3. HEADER / NAVEGAÇÃO (Flexbox)
+----------------------------------------------------------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: rgba(12, 10, 8, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linha);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem;
+}
+
+.logo {
+  font-family: var(--fonte-display);
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  color: var(--texto);
+}
+
+.logo__accent {
+  color: var(--gold);
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav__link {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--texto-suave);
+  padding-bottom: 4px;
+  transition: color var(--transicao);
+}
+
+/* Sublinhado animado: usamos um pseudo-elemento que cresce de 0% a 100%
+   de largura no hover. É um efeito clássico e barato em performance. */
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  background-color: var(--gold);
+  transition: width var(--transicao);
+}
+
+.nav__link:hover,
+.nav__link.is-active {
+  color: var(--texto);
+}
+
+.nav__link:hover::after,
+.nav__link.is-active::after {
+  width: 100%;
+}
+
+.nav__link--cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cart-badge {
+  background-color: var(--gold);
+  color: var(--bg-base);
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -----------------------------------------------------------
+   4. CONTROLE DE SEÇÕES (Início / Carrinho / Sobre)
+   Por padrão toda ".section" fica escondida; o JS adiciona
+   a classe "is-active" na seção que deve aparecer.
+----------------------------------------------------------- */
+.section {
+  display: none;
+}
+
+.section.is-active {
+  display: block;
+  /* dispara a animação de fade-in toda vez que a seção
+     passa de "display: none" para "display: block" */
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -----------------------------------------------------------
+   5. HERO
+----------------------------------------------------------- */
+.hero {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 3.5rem;
+  text-align: center;
+}
+
+.hero__eyebrow {
+  font-family: var(--fonte-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.hero__title {
+  font-family: var(--fonte-display);
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  background: linear-gradient(180deg, var(--gold-claro) 0%, var(--gold) 55%, var(--gold-escuro) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1.3rem;
+}
+
+.hero__subtitle {
+  color: var(--texto-suave);
+  font-size: 1.05rem;
+  max-width: 520px;
+  margin: 0 auto 2.2rem;
+}
+
+/* -----------------------------------------------------------
+   6. BOTÕES
+----------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  font-family: var(--fonte-corpo);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transicao), box-shadow var(--transicao), background-color var(--transicao);
+}
+
+.btn--primary {
+  background-color: var(--gold);
+  color: var(--bg-base);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-ouro);
+}
+
+.btn--card {
+  width: 100%;
+  background-color: transparent;
+  color: var(--gold-claro);
+  border: 1px solid var(--gold-escuro);
+}
+
+.btn--card:hover {
+  background-color: var(--gold);
+  color: var(--bg-base);
+  border-color: var(--gold);
+}
+
+.btn--icon {
+  background-color: var(--bg-elevado);
+  color: var(--texto);
+  border: 1px solid var(--linha);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--fonte-mono);
+  line-height: 1;
+}
+
+.btn--icon:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn--remover {
+  background: none;
+  border: none;
+  color: var(--texto-suave);
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn--remover:hover {
+  color: var(--gelo);
+}
+
+/* -----------------------------------------------------------
+   7. TÍTULOS DE SEÇÃO
+----------------------------------------------------------- */
+.section-heading {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.section-heading h2 {
+  font-family: var(--fonte-display);
+  font-size: 2.2rem;
+  letter-spacing: 0.02em;
+  color: var(--texto);
+}
+
+.section-heading p {
+  color: var(--texto-suave);
+  margin-top: 0.3rem;
+}
+
+/* -----------------------------------------------------------
+   8. VITRINE DE PRODUTOS (CSS Grid)
+----------------------------------------------------------- */
+.vitrine-wrapper {
+  padding-bottom: 5rem;
+}
+
+.vitrine {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  /* grid responsivo: cria quantas colunas de no mínimo 260px couberem */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
+}
+
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform var(--transicao), box-shadow var(--transicao), border-color var(--transicao);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold-escuro);
+  box-shadow: var(--sombra-ouro);
+}
+
+.card__badge {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background-color: rgba(12, 10, 8, 0.75);
+  border: 1px solid var(--gold);
+  color: var(--gold-claro);
+  backdrop-filter: blur(4px);
+}
+
+.card__img-wrapper {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: var(--bg-elevado);
+}
+
+.card__img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* leve zoom na imagem quando o mouse passa por cima do card inteiro */
+.card:hover .card__img-wrapper img {
+  transform: scale(1.06);
+}
+
+.card__body {
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex-grow: 1;
+}
+
+.card__categoria {
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-suave);
+}
+
+.card__nome {
+  font-family: var(--fonte-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.01em;
+  color: var(--texto);
+}
+
+.card__descricao {
+  font-size: 0.88rem;
+  color: var(--texto-suave);
+  flex-grow: 1;
+}
+
+.card__preco {
+  font-family: var(--fonte-mono);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--gold-claro);
+  margin-top: 0.2rem;
+}
+
+/* -----------------------------------------------------------
+   9. CARRINHO
+----------------------------------------------------------- */
+.carrinho-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+.carrinho-vazio {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--texto-suave);
+  border: 1px dashed var(--linha);
+  border-radius: var(--raio);
+}
+
+.carrinho-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pequeno);
+  padding: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.carrinho-item__img {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--raio-pequeno);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.carrinho-item__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carrinho-item__info {
+  flex-grow: 1;
+}
+
+.carrinho-item__nome {
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.carrinho-item__preco {
+  font-family: var(--fonte-mono);
+  color: var(--gold-claro);
+  font-size: 0.9rem;
+}
+
+.carrinho-item__qtd {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--fonte-mono);
+}
+
+.carrinho-item__acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.carrinho-resumo {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linha);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carrinho-resumo__total {
+  font-family: var(--fonte-display);
+  font-size: 1.6rem;
+  color: var(--gold);
+}
+
+/* -----------------------------------------------------------
+   10. SOBRE
+----------------------------------------------------------- */
+.sobre {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+.sobre__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+}
+
+.sobre__texto p {
+  color: var(--texto-suave);
+  margin-bottom: 1rem;
+}
+
+.sobre__texto strong {
+  color: var(--gold-claro);
+}
+
+.sobre__lista li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--linha);
+  color: var(--texto-suave);
+}
+
+.sobre__numero {
+  font-family: var(--fonte-mono);
+  color: var(--gold);
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .sobre__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -----------------------------------------------------------
+   11. FOOTER
+----------------------------------------------------------- */
+.footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--linha);
+}
+
+/* -----------------------------------------------------------
+   12. RESPONSIVIDADE GERAL
+----------------------------------------------------------- */
+@media (max-width: 560px) {
+  .nav__list {
+    gap: 1rem;
+  }
+
+  .hero {
+    padding: 3.5rem 1.2rem 2.5rem;
+  }
+
+  .carrinho-item {
+    flex-wrap: wrap;
+  }
+}
+
+/* -----------------------------------------------------------
+   13. ACESSIBILIDADE — respeita usuários que pedem menos animação
+----------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grillzNV — Iced Out Grillz</title>
+
+  <!-- Fontes do Google Fonts:
+       - Bebas Neue: fonte condensada de cartaz, usada nos títulos (identidade "hip hop/streetwear")
+       - Space Grotesk: fonte do corpo de texto, moderna e bem legível
+       - Space Mono: usada nos preços e badges, para lembrar etiqueta/recibo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER / NAVEGAÇÃO ===================== -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="logo" data-nav-link data-target="inicio">
+        grillz<span class="logo__accent">NV</span>
+      </a>
+
+      <!-- data-nav-link + data-target são usados pelo JS para saber
+           qual seção mostrar quando o link é clicado (ver script.js) -->
+      <nav class="nav" aria-label="Navegação principal">
+        <ul class="nav__list">
+          <li><a href="#" class="nav__link is-active" data-nav-link data-target="inicio">Início</a></li>
+          <li><a href="#" class="nav__link" data-nav-link data-target="sobre">Sobre</a></li>
+          <li>
+            <a href="#" class="nav__link nav__link--cart" data-nav-link data-target="carrinho">
+              Carrinho
+              <span class="cart-badge" id="cart-badge">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== SEÇÃO: INÍCIO / VITRINE ===================== -->
+    <!-- A classe "section" + "is-active" controla qual seção aparece.
+         Isso é manipulado via JS em script.js (função mostrarSecao). -->
+    <section id="inicio" class="section is-active">
+
+      <!-- HERO -->
+      <div class="hero">
+        <p class="hero__eyebrow">Ourivesaria dental autoral</p>
+        <h1 class="hero__title">SEU SORRISO.<br>SUA COROA.</h1>
+        <p class="hero__subtitle">
+          Grillz banhados a ouro 18k, prata e cravejados com zircônia ou diamante.
+          Peças feitas sob medida para quem não passa despercebido.
+        </p>
+        <a href="#vitrine" class="btn btn--primary">Ver coleção</a>
+      </div>
+
+      <!-- VITRINE DE PRODUTOS -->
+      <div class="vitrine-wrapper" id="vitrine">
+        <div class="section-heading">
+          <h2>Coleção grillzNV</h2>
+          <p>Cada peça é moldada individualmente. Preços em Reais (R$).</p>
+        </div>
+
+        <!-- Este <div> começa vazio de propósito: os cards de produto
+             são inseridos aqui dinamicamente pelo JavaScript (renderizarProdutos),
+             lendo o array "produtos" definido em script.js -->
+        <div class="vitrine" id="vitrine-produtos" aria-live="polite">
+          <!-- cards gerados via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SEÇÃO: CARRINHO ===================== -->
+    <section id="carrinho" class="section">
+      <div class="section-heading">
+        <h2>Seu carrinho</h2>
+        <p>Confira as peças selecionadas antes de fechar o pedido.</p>
+      </div>
+
+      <!-- Conteúdo do carrinho também é 100% gerado via JS,
+           pois muda toda vez que o usuário adiciona/remove um item -->
+      <div class="carrinho-container" id="carrinho-container">
+        <!-- lista de itens + resumo gerados via JS -->
+      </div>
+    </section>
+
+    <!-- ===================== SEÇÃO: SOBRE ===================== -->
+    <section id="sobre" class="section">
+      <div class="sobre">
+        <div class="section-heading">
+          <h2>Sobre a grillzNV</h2>
+        </div>
+
+        <div class="sobre__grid">
+          <div class="sobre__texto">
+            <p>
+              A <strong>grillzNV</strong> nasceu na cena, entre estúdios de rap e barbearias,
+              a partir de uma ideia simples: joia dental não é acessório, é assinatura.
+              Cada grillz que sai da nossa bancada carrega a mesma atenção ao detalhe
+              de uma peça de alta joalheria — só que feita para brilhar quando você abre um sorriso.
+            </p>
+            <p>
+              Trabalhamos com ouro 18k, prata rodinada e cravação de zircônia ou diamante,
+              sempre com molde 100% personalizado. Sem molde genérico, sem grillz de prateleira.
+            </p>
+          </div>
+
+          <ul class="sobre__lista">
+            <li><span class="sobre__numero">01</span> Molde personalizado a partir da sua arcada</li>
+            <li><span class="sobre__numero">02</span> Metais nobres: ouro 18k, prata 950 e ródio</li>
+            <li><span class="sobre__numero">03</span> Cravação sob encomenda: zircônia ou diamante VVS</li>
+            <li><span class="sobre__numero">04</span> Produção e polimento 100% autorais</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <p>&copy; 2026 grillzNV — Projeto acadêmico, todos os produtos são fictícios.</p>
+    <p> Feito por Rodrigo Assis.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
